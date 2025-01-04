@@ -1,0 +1,10 @@
+JS
+
+1- Countdown to Events
+2- Weather Dashboard
+
+SQL
+
+3- E-commerce Website
+
+ https://blog.openreplay.com/best-seven-practice-projects-to-level-up-your-skills/?ref=dailydev
