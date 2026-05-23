@@ -1,5 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* ========================================
+   CSS VARIABLES - LIGHT/DARK MODE
+   ======================================== */
+:root {
+    --bg-primary: #f5f7fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a4a6a;
+    --text-light: #6c6c8a;
+    --accent-primary: #0077b6;
+    --accent-secondary: #ffd60a;
+    --accent-danger: #fa3628;
+    --accent-gradient: linear-gradient(45deg, #0077b6, #ffd60a);
+    --card-bg: #ffffff;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --header-bg: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-primary: #0a0a1a;
+    --bg-secondary: #0f0f23;
+    --text-primary: #ffffff;
+    --text-secondary: #c4c4d4;
+    --text-light: #a0a0b0;
+    --accent-primary: #0096e6;
+    --accent-secondary: #ffe44d;
+    --accent-danger: #fa3628;
+    --accent-gradient: linear-gradient(45deg, #0096e6, #ffe44d);
+    --card-bg: #15152a;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --header-bg: rgba(15, 15, 35, 0.95);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,42 +42,66 @@
     font-family: 'Poppins', sans-serif;
 }
 
-
 body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Evita desplazamiento horizontal */
-    width: 100%;
-    font-family: 'Poppins', sans-serif;
-    background: #0c1022;
-    color: #fff;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
 }
 
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-secondary);
+}
+
+/* ========================================
+   HEADER & NAVIGATION
+   ======================================== */
 .header {
     width: 100%;
     padding: 1rem 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #0c1022;
+    background: var(--header-bg);
+    backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    animation: slideTop 1s ease forwards;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease;
 }
 
 .logo {
     font-size: 1.5rem;
-    color: #fff;
+    color: var(--text-primary);
     text-decoration: none;
-    font-weight: 600;
-    animation: slideTop 1s ease forwards;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .navbar {
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
 .nav-links {
@@ -52,214 +111,306 @@ body {
 }
 
 .nav-links li a {
-    color: #fff;
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
-    transition: color 0.3s;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.nav-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient);
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+    width: 100%;
 }
 
 .navbar a.active,
 .navbar a:hover {
-background: linear-gradient(45deg, #0077b6, #ffd60a);
--webkit-text-fill-color: transparent;
-background-clip: text;
-} 
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-.nav-links li a:hover {
-    color: #ffd60a;
+/* Botón de tema */
+.theme-toggle {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
 }
 
 /* Botón de menú hamburguesa */
 .nav-toggle {
     display: none;
-    font-size: 1.5rem;
-    color: #fff;
     background: none;
     border: none;
     cursor: pointer;
+    color: var(--text-primary);
 }
 
-.Hi{
-    display: flex; /* Magic starts here, turning your container into a flex container */
-    flex-wrap: wrap;
-    justify-content: center; /* This centers the child horizontally */
-    align-items: center; /* And this centers it vertically */
-    min-width: 400px;
-    margin-top: 10vh;
+/* ========================================
+   PROJECTS SECTION
+   ======================================== */
+.projects-container {
+    padding: 100px 10% 50px;
 }
 
-
-.card img {
-    width: 30rem;
-    height: 15rem;
+.section-title {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 3rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.card {
-    margin-left: 6rem;
-    margin-top: 2rem;
-    min-width: 400px;
-    height: 15rem;
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border-radius: 1rem;
     overflow: hidden;
-    transition: height 3s;
-    interpolate-size: allow-keywords;
-    width: 2rem;
-    margin:1%;
-    min-width: 400px; /*Limita el tamaño reducido y lo pone debajo*/
-    border-radius: 0.8rem;
-    scrollbar-color: #ffd60a transparent;
-    animation: zoomIn 2s ease forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+    animation: zoomIn 0.6s ease forwards;
 }
 
-.card:hover{
-    height: auto;
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow);
 }
 
+.carousel {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
 
+.carousel-inner,
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover .carousel-control-prev,
+.project-card:hover .carousel-control-next {
+    opacity: 1;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.card-body hr {
+    margin: 0.5rem 0;
+    border-color: var(--border-color);
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin: 1rem 0;
+}
+
+/* Tags de tecnologías */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.tag {
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.tag:hover {
+    transform: translateY(-2px);
+}
+
+.tag-primary { background: #0077b6; color: #fff; }
+.tag-secondary { background: #ac50af; color: #fff; }
+.tag-info { background: #17a2b8; color: #fff; }
+.tag-warning { background: #ffc107; color: #000; }
+.tag-success { background: #188832; color: #fff; }
+.tag-danger { background: #fa3628; color: #fff; }
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
 @media (max-width: 768px) {
-    
-    
-    
-    body {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden; /* Elimina el scroll horizontal */
-        box-sizing: border-box; /* Garantiza un mejor control del tamaño de los elementos */
-        transform: scale(0.9); /* Reduce un poco el zoom en pantallas pequeñas */
-        transform-origin: top left;
+    .header {
+        padding: 1rem 5%;
+    }
+
+    .nav-toggle {
+        display: block;
     }
 
     .nav-links {
-        display: none; /* Oculta el menú inicialmente */
-        flex-direction: column;
+        display: none;
         position: absolute;
         top: 100%;
         right: 0;
-        background: #0c1022;
-        width: 200px;
+        background: var(--header-bg);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
         padding: 1rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 1rem;
+        gap: 1rem;
+        min-width: 200px;
+        box-shadow: var(--card-shadow);
+        border: 1px solid var(--border-color);
     }
 
     .nav-links.active {
-        display: flex; /* Muestra el menú cuando está activo */
-        
+        display: flex;
     }
 
- 
-    .nav-toggle {
-        display: block; /* Muestra el botón de hamburguesa */
+    .navbar {
+        gap: 1rem;
     }
 
-  
+    .projects-container {
+        padding: 80px 5% 40px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .carousel {
+        height: 200px;
+    }
 }
-
 
 @media (max-width: 480px) {
-    .card {
-        margin-left: 6rem;
-        margin-top: 2rem;
-        min-width: 400px;
-        height: 25rem;
-        overflow: auto;
-       width: 2rem;
-        margin:1%;
-        min-width: 400px; /*Limita el tamaño reducido y lo pone debajo*/
-        border-radius: 0.8rem;
-        scrollbar-color: #ffd60a transparent;
-        animation: zoomIn 2s ease forwards;
+    .projects-container {
+        padding: 70px 4% 30px;
     }
-    
+
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+    }
+
+    .carousel {
+        height: 180px;
+    }
+
+    .tag {
+        padding: 0.2rem 0.6rem;
+        font-size: 0.7rem;
+    }
 }
 
-
-
-
-/* KEYFRAMES ANIMATION */
+/* ========================================
+   ANIMACIONES
+   ======================================== */
 @keyframes slideTop {
-    0% {
-        opacity: 0;
-        transform: translateY(100px);
-
-}
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(100px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideRight {
-    0% {
-        opacity: 0;
-        transform: translateX(-100px);
-
+    0% { opacity: 0; transform: translateX(-100px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
 
 @keyframes slideLeft {
-    0% {
-        opacity: 0;
-        transform: translateX(100px);
-
-}
-
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    0% { opacity: 0; transform: translateX(100px); }
+    100% { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideBottom {
-    0% {
-        opacity: 0;
-        transform: translateY(-100px);
-
-}
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
+    0% { opacity: 0; transform: translateY(-100px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes zoomIn {
-    0%{
-        opacity: 0;
-        transform: scale(0);
-
-    }
-    100%{
-        opacity: 1;
-        transform: scale(1);
-    }
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes floatImage {
-    0%{
-        transform: translateY(0);
-    }
-    50%{
-        transform: translateY(-24px);
-    }
-    100%{
-        transform: translateY(0);
-    }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-24px); }
+    100% { transform: translateY(0); }
 }
 
 @keyframes circleRotate {
-    0%{
-        transform: rotate(0);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
 }
